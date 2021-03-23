@@ -1,8 +1,21 @@
-from speech_synthesizer import start_speech_synthesis_from_text, download_from_s3_by_file_key
+import script_generator
+import speech_synthesizer
+import utils
 
-text = "This is Kevin running from the orchestrator script"
-filename = "test"
+SUBREDDIT = "nosleep"
+FILENAME = SUBREDDIT + utils.get_date_time()
 
-file_key = start_speech_synthesis_from_text(text)
 
-download_from_s3_by_file_key(file_key, filename)
+''' script collection '''
+
+script_generator.download_top_n_posts(subreddit=SUBREDDIT, filename=FILENAME, skip=1, limit=2,)
+path = utils.get_script_path(filename=FILENAME)
+with open(path, 'r', encoding="utf-8") as f:
+    script = f.read()
+
+
+''' script to speech conversion '''
+
+file_key = speech_synthesizer.start_speech_synthesis_from_text(text=script)
+
+speech_synthesizer.download_from_s3_by_file_key(file_key=file_key, filename=FILENAME)

@@ -1,6 +1,6 @@
 import time
-from os import path
 import boto3
+import utils
 
 # Let's use Amazon S3
 S3_KEY_PREFIX = 'kevin-speaks'
@@ -38,8 +38,8 @@ def start_speech_synthesis_from_text(text):
 
 def download_from_s3_by_file_key(file_key, filename):
     print('trying to download file:', file_key)
-    file_path = path.relpath('audio-output/{}.mp3'.format(filename))
-    with open(file_path, 'wb') as data:
+
+    with open(utils.get_audio_path(filename), 'wb') as data:
         s3.download_fileobj('audios-from-polly', file_key, data)
 
 
