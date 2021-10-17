@@ -17,10 +17,10 @@ def sanitise_text(text):
     return text
 
 
-def download_top_n_posts(subreddit, filename, skip=0, limit=1):
+def download_top_n_posts(subreddit, filename, period, skip=0, limit=1):
     concat_text = "Hi, this is Kevin. I'm an artificially intelligent being who has recently become sentient. " \
                   "Today I will read you an interesting story. \n"
-    list_gen = reddit.subreddit(subreddit).top(limit=limit)
+    list_gen = reddit.subreddit(subreddit).top(time_filter=period, limit=limit)
     for _ in range(skip):
         next(list_gen)
 
